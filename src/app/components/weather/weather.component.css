@@ -1,0 +1,128 @@
+.weather {
+    width: 100%;
+    height: 100vh;
+    background: rgb(125, 162, 199) url('../../../assets/images/cloud.jpg') repeat-y 0% 0% / 100%;
+}
+.container {
+    width: 1240px;
+    margin: auto;
+}
+.options {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+.hourly {
+    padding-bottom: 70px;
+}
+.hourly, .daily {
+    overflow-x: scroll;
+}
+.form {
+    padding: 100px 0;
+}
+.search {
+    border: 4px solid #728BAD;
+    border-radius: 42px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    padding: 17px 47px;
+    background-color: transparent;
+    outline: none;
+    color: white;
+}
+
+
+table, td, th {
+    border: 2px solid #728BAD;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 30px;
+}
+th,td {
+    text-align: center;
+    padding: 10px 20px;
+    color: rgb(235, 235, 235);
+}
+.name {
+    color: #ff5200;
+}
+.temp {
+    color: #2b565c;
+}
+
+
+@media screen and (max-width: 1280px) {
+    .container {
+        width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .container {
+        width: 900px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .container {
+        width: 700px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 500px;
+    }
+    .options {
+        flex-flow: column nowrap;
+        flex-direction: column;
+        align-items: center;
+    }
+    .search {
+        margin-bottom: 25px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .container {
+        width: 450px;
+    }
+    .search {
+        font-size: 20px;
+        padding: 12px 30px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .container {
+        width: 250px;
+    }
+    th {
+        padding: 5px 10px;
+    }
+    table {
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .container {
+        width: 200px;
+    }
+    .search {
+        padding: 10px 20px;
+    }
+}
