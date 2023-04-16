@@ -1,60 +1,28 @@
 <div class="weather">
     <div class="container">
-        <form [formGroup]="form" class="form">
-            <div class="options">
-                <div class="search_field">
-                    <input type="search" class="search" placeholder="Search.." [formControlName]="'name'" (input)="search()">
-                </div>
-                <div class="filter_field">
-                    <select class="filter" [formControlName]="'type'" (change)="changeCountry()">
-                        <option value="" selected hidden>Select type</option>
-                        <option value="hourly">Hourly</option>
-                        <option value="daily">Daily</option>
-                    </select>
-        
-                    <!-- <mat-form-field appearance="fill">
-                        <mat-label>Favorite food</mat-label>
-                        <mat-select>
-                            <mat-option *ngFor="let item of options" [value]="item.value">
-                                {{item.viewValue}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-                </div>
-            </div>
-        </form>
-        
-        <div>
-            <div class="hourly" *ngIf="showHourly">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>City Name</th>
-                            <th class="name" *ngFor="let item of daily_data">{{item.date}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <td class="name">{{data?.name}}</td>
-                        <td class="temp" *ngFor="let item of daily_data">{{item.temp | temp}}&deg;C</td>
-                    </tbody>
-                </table>
-            </div>
-    
-            <div class="daily" *ngIf="showDaily">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>City Name</th>
-                            <th class="name" *ngFor="let item of hourly_data">{{item.date | hours}}:00</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <td class="name">{{data?.name}}</td>
-                        <td class="temp" *ngFor="let item of hourly_data">{{item.temp | temp}}&deg;C</td>
-                    </tbody>
-                </table>
-            </div>
+        <h1 class="title">-Weather Template-</h1>
 
+        <div class="form_block">
+            <form id="form" [formGroup]="form">
+                <div class="options">
+                    <div class="search_field">
+                        <span class="pi pi-search"></span>
+                        <input type="search" class="search" placeholder="Search.." [formControlName]="'name'" (input)="search()">
+                    </div>
+                    <div class="filter_field">
+                        <select class="filter" [formControlName]="'option'" (change)="changeOption()">
+                            <option value="" selected hidden>Select type</option>
+                            <option value="hourly">Hourly</option>
+                            <option value="daily">Daily</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+        <div class="table_block">
+            <app-table *ngIf="selectedPreset === 'hourly'" [cityName]="name" [tableData]="hourlyData" [show]="isShow"></app-table>
+            <app-table *ngIf="selectedPreset === 'daily'" [cityName]="name" [tableData]="dailyData" [show]="isShow"></app-table>
         </div>
 
     </div>

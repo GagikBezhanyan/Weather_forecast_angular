@@ -5,8 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class HoursPipe implements PipeTransform {
 
-  transform(value: Date, ...args: unknown[]): number{
-    return value.getHours() < 10 ? Number(`0${value.getHours()}`): value.getHours();
+  transform(value: number): string {
+    let val = new Date(value * 1000);
+    return val.getHours() < 10 ? `0${val.getHours()}:00`: `${val.getHours()}:00`;
   }
 
 }

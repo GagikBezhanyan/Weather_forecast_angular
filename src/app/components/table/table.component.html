@@ -1,0 +1,22 @@
+<div class="table">
+
+  <div class="title_block">
+    <div class="icon">
+      <span class="pi pi-map-marker"></span>
+    </div>
+    <div class="name">{{ cityName }}</div>
+  </div>
+
+  <div *ngFor="let item of tableData" class="info_block">
+    <div *ngIf="show" class="date">{{ item.date | days }}</div>
+    <div *ngIf="!show" class="date">{{ item.date | hours }}</div>
+    <div>
+      <img [src]="item.icon" alt="Weather Icon">
+    </div>
+    <div class="condition">
+      <span>{{ item.weather }}</span>
+    </div>
+    <div class="temp">{{ item.temp | temp }}&deg;C</div>
+  </div>
+
+</div>

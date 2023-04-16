@@ -1,0 +1,49 @@
+.table {
+    width: 80%;
+    margin: auto;
+    font-size: 30px;
+    font-weight: 500;
+    font-family: cursive;
+    color: white;
+    box-shadow: 2px 5px 14px 10px #56678d;
+}
+.title_block {
+    background: rgb(45 42 94);
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 30px;
+    text-align: center;
+}
+.icon {
+    margin-right: 10px
+}
+.info_block {
+    background: rgb(53, 101, 150) url('../../../assets/images/blue-gradient.jpg') no-repeat center / cover;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px;
+}
+.condition {
+    color: rgb(172, 167, 167); 
+}
+.date {
+    min-width: 165px;
+}
+
+@media screen and (max-width: 992px) {
+    .condition {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .table {
+        font-size: 25px;
+    }
+    .info_block {
+        padding: 8px 15px;
+    }
+    .date {
+        min-width: 115px;
+    }
+}

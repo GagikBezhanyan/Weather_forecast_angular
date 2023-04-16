@@ -10,9 +10,9 @@ export class RequestService {
 
   constructor(public http: HttpClient) { }
 
-  getData(url: string): Observable<any> {
+  getData<Type> (url: string) {
     let header = new HttpHeaders({'Accept-language': 'en'})
-    return this.http.get(url, {headers: header});
+    return this.http.get<Type>(url, {headers: header});
   }
 
 }

@@ -1,85 +1,113 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DailyData, Data, HourlyData } from 'src/app/models/models';
 import { RequestService } from 'src/app/services/request.service';
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.css']
+  styleUrls: ['./weather.component.css'],
 })
 
 export class WeatherComponent implements OnInit {
-  private apiKey: string = '010721642521f31b0fbc8c3831d45951';
-  public city: string = '';
-  public timeOut!: any;
-  public form: any;
-  public data: any;
-  public daily_data: any = [];
-  public hourly_data: any = [];
-  public showDaily: boolean = true;
-  public showHourly: boolean = true;
+  public selectedPreset: string = 'daily';
+  public isShow: boolean = true;
+  public dailyData: DailyData[] = [];
+  public hourlyData: HourlyData[] = [];
 
-  constructor(private request: RequestService, private fb: FormBuilder) {}
+  private apiKey: string = '010721642521f31b0fbc8c3831d45951';
+  public iconURL: string = `http://openweathermap.org/img/w/`;
+  public city: string = '';
+  public timeOut: any;
+  public form: FormGroup = new FormGroup({});
+  public data!: Data;
+  public name: string = '';
+  public lat!: number;
+  public lon!: number;
+  
+  constructor(private request: RequestService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: '',
-      type: ''
+      name: 'Yerevan',
+      option: 'daily'
     })
-  }
-  
-  search() {
-    this.showDaily = false;
-    this.showHourly = false;
 
-    clearInterval(this.timeOut);
-    this.timeOut = setTimeout(() => {
-      this.city = this.form.value.name;
-      const url = `http://api.openweathermap.org/geo/1.0/direct?q=${this.city}&limit=1&appid=${this.apiKey}`;
+    this.name = this.form.value.name;
+    this.getData(this.form.value.name)
+  }
+
+  getData(city: string) {
+    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${this.apiKey}`;
       this.request.getData(url).subscribe((res: any) => {
         this.data = res[0];
+        this.name = this.data.name;
+        this.lat = this.data.lat;
+        this.lon = this.data.lon;
         console.log(this.data);
+
+        this.getDailyData(this.lat, this.lon);
       })
-    }, 1000) 
   }
 
-  changeCountry() {
-    if(this.form.value.type === 'daily') {
-      this.showDaily = true;
-      const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.data.lat}&lon=${this.data.lon}&appid=${this.apiKey}`;
+  getDailyData(lat: number, lon: number) {
+    this.dailyData = [];
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${this.apiKey}`;
       this.request.getData(url).subscribe((res: any) => {
         console.log(res);
-        
-        const week_name = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
         res.daily.forEach((item: any, i: number) => {
           if (i < 7) {
-            this.daily_data[i] = {
-              date: week_name[new Date(item.dt * 1000).getDay()],
-              temp: item.temp.day
-            }
+            this.dailyData.push({
+              date: item.dt,
+              temp: item.temp.day,
+              weather: item.weather[0].main,
+              icon: `${this.iconURL}/${item.weather[0].icon}.png`
+            })
           }
         })
-        console.log(this.daily_data);
-
+        console.log(this.dailyData);
       })
-    } else {
-      this.showHourly = true;
-      const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.data.lat}&lon=${this.data.lon}&exclude=current,minutely,daily,alerts&appid=${this.apiKey}`;
+  }
+
+  getHourlyData(lat: number, lon: number) {
+    this.hourlyData = [];
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&appid=${this.apiKey}`;
       this.request.getData(url).subscribe((res: any) => {
         console.log(res);
 
         let j = 0;
         res.hourly.forEach((item: any, i: number) => {
           if (i % 3 == 0 && j < 8) {
-            this.hourly_data[j] = {
-              date: new Date(item.dt * 1000),
-              temp: item.temp
-            }
+            this.hourlyData.push({
+              date: item.dt,
+              temp: item.temp,
+              weather: item.weather[0].main,
+              icon: `${this.iconURL}/${item.weather[0].icon}.png`
+            })
             j++;
           }
         })
-        console.log(this.hourly_data);
+        console.log(this.hourlyData);
       })
+  }
+
+  search() {
+    clearInterval(this.timeOut);
+    this.timeOut = setTimeout(() => {
+      this.getData(this.form.value.name)
+    }, 1000)
+  }
+
+  changeOption() {
+    if (this.form.value.option === 'daily') {
+      this.selectedPreset = 'daily';
+      this.isShow = true;
+      this.getDailyData(this.lat, this.lon);
+    } else {
+      this.selectedPreset = 'hourly';
+      this.isShow = false;
+      this.getHourlyData(this.lat, this.lon);
     }
   }
 

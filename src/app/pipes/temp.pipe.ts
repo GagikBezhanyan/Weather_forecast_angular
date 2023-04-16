@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TempPipe implements PipeTransform {
 
-  transform(value: number, ...args: unknown[]): number {
+  transform(value: number): number {
     return Math.floor(value - 272.15);
   }
 

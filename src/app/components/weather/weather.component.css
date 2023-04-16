@@ -1,61 +1,69 @@
 .weather {
     width: 100%;
-    height: 100vh;
-    background: rgb(125, 162, 199) url('../../../assets/images/cloud.jpg') repeat-y 0% 0% / 100%;
+    padding-bottom: 100px;
+    background: rgb(125, 162, 199) url('../../../assets/images/wallpaper-background.jpg') no-repeat center / cover;
 }
 .container {
     width: 1240px;
     margin: auto;
+}
+.title {
+    text-align: center;
+    padding-top: 50px;
+    font-weight: 500;
+    font-size: 40px;
+    font-family: cursive;
+    color: white;
+}
+.form_block {
+    padding: 50px 0 100px;
 }
 .options {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
 }
-.hourly {
-    padding-bottom: 70px;
-}
-.hourly, .daily {
-    overflow-x: scroll;
-}
-.form {
-    padding: 100px 0;
+.search_field {
+    position: relative;
 }
 .search {
-    border: 4px solid #728BAD;
-    border-radius: 42px;
+    border: 2px solid #728BAD;
+    border-radius: 40px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 30px;
-    padding: 17px 47px;
+    padding: 10px 20px 10px 40px;
     background-color: transparent;
     outline: none;
-    color: white;
+    background: #ddd2d2;
+    color: #474c50;
 }
-
-
-table, td, th {
+.search:focus {
     border: 2px solid #728BAD;
+    outline: 2px solid #36639d;
 }
-table {
-    width: 100%;
-    border-collapse: collapse;
+.pi-search {
+    position: absolute;
+    top: 20px;
+    left: 15px
+}
+.filter {
+    border: 2px solid #728BAD;
+    border-radius: 25px;
     font-family: 'Inter';
+    font-style: normal;
     font-weight: 500;
-    font-size: 30px;
-}
-th,td {
-    text-align: center;
+    font-size: 25px;
     padding: 10px 20px;
-    color: rgb(235, 235, 235);
+    background: #ddd2d2;
+    color: #474c50;
 }
-.name {
-    color: #ff5200;
+.filter:focus {
+    border: 2px solid #728BAD;
+    outline: 2px solid #36639d;
 }
-.temp {
-    color: #2b565c;
-}
+
 
 
 @media screen and (max-width: 1280px) {
@@ -78,7 +86,7 @@ th,td {
 
 @media screen and (max-width: 768px) {
     .container {
-        width: 500px;
+        width: 95%;
     }
     .options {
         flex-flow: column nowrap;
@@ -90,39 +98,8 @@ th,td {
     }
 }
 
-@media screen and (max-width: 580px) {
-    .container {
-        width: 450px;
-    }
-    .search {
-        font-size: 20px;
-        padding: 12px 30px;
-    }
-}
-
 @media screen and (max-width: 480px) {
     .container {
         width: 350px;
-    }
-}
-
-@media screen and (max-width: 380px) {
-    .container {
-        width: 250px;
-    }
-    th {
-        padding: 5px 10px;
-    }
-    table {
-        font-size: 25px;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .container {
-        width: 200px;
-    }
-    .search {
-        padding: 10px 20px;
     }
 }
